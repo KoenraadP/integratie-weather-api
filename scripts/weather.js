@@ -19,7 +19,7 @@ btnSearch.addEventListener("click", () => {
     const city = inpSearch.value.trim();
     // correcte endpoint maken
     // zie voorbeeld op https://openweathermap.org/current
-    const endpoint = `${apiUrl}&appid=${apiKey}&q=${city}`;
+    const endpoint = `${apiUrl}&appid=${apiKey}&q=${city}&units=metric&lang=nl`;
     // data ophalen met fetch
     fetch(endpoint)
         .then(response => {
@@ -28,6 +28,14 @@ btnSearch.addEventListener("click", () => {
         })
         .then(data => {
             console.log(data);
+            console.log(data.weather[0].description);
+            const img = `<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">`
+            tdWeatherGeneral.innerHTML = img;
+            tdWeatherGeneral.innerHTML += data.weather[0].description;
+            tdHumidity.innerHTML = data.main.humidity;
+            tdCurrentTemp.innerHTML = data.main.temp;
+            tdMaxTemp.innerHTML = data.main.temp_max;
+            tdMinTemp.innerHTML = data.main.temp_min;
         })
         .catch(error => {
             alert(error.message);
